@@ -1,0 +1,53 @@
+---
+title: "descriptives"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(emmeans)
+library(easystats)
+library(afex)
+```
+
+```{r}
+data <-
+  read_csv("https://raw.githubusercontent.com/aussiemic84/open_research_exercises/main/01_data/02_cleaned/data_cleaned.csv")
+data
+```
+
+``` {)}
+```
+
+```{r}
+mean(data$age)
+sd(data$age)
+mean(data$feet)
+sd(data$feet)
+```
+
+```{r}
+analysis <-
+summary(lm(feet ~ condition, data = data))
+analysis
+```
+
+```{r}
+glass_delta(feet~condition, data = data)
+```
+
+```{r}
+data %>%
+  group_by(condition) %>%
+  summarise_at(vars(feet),
+               list(mean = mean))
+```
+
+```{r}
+data %>%
+  group_by(condition) %>%
+  summarise_at(vars(feet),
+               list(sd = sd))
+```
