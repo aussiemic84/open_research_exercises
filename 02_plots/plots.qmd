@@ -1,0 +1,36 @@
+---
+title: "plots"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+```{r}
+data <-
+  read_csv("https://raw.githubusercontent.com/aussiemic84/open_research_exercises/main/01_data/02_cleaned/data_cleaned.csv")
+data
+```
+
+```{r}
+data2 <-
+   (data |> 
+  mutate(
+    condition = case_when(
+      condition == 0 ~ "small",
+      TRUE ~ "large"
+    )
+  ))
+data2
+```
+
+```{r}
+ggplot(data = data2) +
+  geom_boxplot(
+    mapping = 
+      aes(x = condition, y = feet)
+  )
+```
