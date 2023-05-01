@@ -1,0 +1,59 @@
+---
+title: "Data cleaning for week 6 exercises"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+library(here)
+library(janitor)
+library(lubridate)
+```
+
+```{r}
+data <- read_csv("https://raw.githubusercontent.com/aussiemic84/open_research_exercises/main/01_data/01_raw/jk_data.csv")
+data
+```
+
+```{r}
+data2 <-
+(data |> 
+  janitor::clean_names())
+data2
+```
+
+```{r}
+data3 <-
+   (data2 |> 
+  mutate(
+    sex = case_when(
+      sex == c("f", "F") ~ 0,
+      TRUE ~ 1
+    )
+  ))
+data3
+```
+
+```{r}
+
+data3$age [55] = 20
+
+```
+
+```{r}
+data4 <-
+   (data3 |> 
+  mutate(
+    condition = case_when(
+      condition == c("small", "small_anchor") ~ 0,
+      TRUE ~ 1
+    )
+  ))
+data4
+```
+
+```{r}
+write_csv(x = data4, here("open_research_exercises/01_data/02_cleaned/data_cleaned.csv"))
+```
